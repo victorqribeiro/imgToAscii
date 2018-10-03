@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title> ASCII </title>
+<style>
+body{
+	margin:0;
+	padding:0;
+}
+pre, code {
+	line-height: 6px;
+	font-family: Courier, monospace;
+	font-size: 11px;
+	color: #000000;
+	
+}
+</style>
+</head>
+<body>
+<script>
+let chars = ["@","%","#","*","+","=","-",":","."," "];
+let chars2 = ["$","@","B","%","8","&","W","M","#","*","o","a","h","k","b","d","p","q","w","m","Z","O",
+							"0","Q","L","C","J","U","Y","X","z","c","v","u","n","x","r","j","f","t","/","\\","|","(",
+							")","1","{","}","[","]","?","-","_","+","~","\<","\>","i","!","l","I",";",":",",","\"","^",
+							"`","'","."," "];
+let canvas, c, dest;
+
+let img = new Image();
+//img.src = 'asciiart1.gif';
+img.src = '02.jpg';
+img.onload = function(){
+	canvas = document.createElement('canvas');
+	canvas.width = img.width;
+	canvas.height = img.height;
+	c = canvas.getContext('2d');
+	c.drawImage(img,0,0);
+	//document.body.appendChild(canvas);
+	loadPixels();
+	printChars();
+}
+
+function loadPixels(){
+	let src = c.getImageData(0,0,img.width,img.height);
+	dest = new Uint8Array(img.width * img.height);
+	for(let i = 0, j = 0; i < src.data.length; i+=4,j++){
+		dest[j] = (src.data[i] * 0.2126) + (src.data[i+1] * 0.7152) + (src.data[i+2] * 0.0722);
+	}
+}
+
+function printChars(){
+	let string = "";
+	let grayStep = Math.ceil( 255 / chars.length );
+	for(let i = 0; i < dest.length; i++){
+		for(let j = 0; j < chars.length; j++){
+			if( dest[i] < (j*grayStep)+grayStep ){
+				string += chars[j];
+				break;
+			}
+		}
+		if( !((i+1) % img.width) ){
+			string += "\n";
+		}
+	}
+	
+	let	font = document.createElement('font');
+	font.size = -2;
+	let pre = document.createElement('pre');
+	pre.innerText = string;
+	font.appendChild(pre);
+	document.body.appendChild(font);
+	/*
+	let s = 0;
+	for(let i = 0; i < string.length; i++){
+		if( (i+1) % img.width != 0 ){
+			s++;
+		}else{
+			console.log(s);
+			s = 0;
+		}
+	}
+	*/
+}
+</script>
+</body>
+</html>
