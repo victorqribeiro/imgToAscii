@@ -21,6 +21,12 @@ ele.display();
 
 The ascii art depends on a monospace font to work properly. You should consider that 1 pixel in your image is going to be translated to 1 char in Ascii. e.g.: if a image is 100 pixels wide, it's going to take 100 chars of space on your page, unless you do something about it. (Which may be my next commit)
 
+The imgToAscii should work with remote images:
+```
+let img = new imgToAscii('http://site.com/image.png');
+```
+but it might not because of cross-origin settings. Keep that in mind.
+
 ----
 
 A similar code is running on my [photoEditor](https://victorribeiro.com/photoEditor) to generate a image of the ascii code (what?!)
