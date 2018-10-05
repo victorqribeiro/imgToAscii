@@ -34,3 +34,5 @@ A similar code is running on my [photoEditor](https://victorribeiro.com/photoEdi
 ![result](img/ele.png)
 
 ![result](img/eu-ascii.png)
+
+[![Open Source Helpers](https://www.codetriage.com/victorqribeiro/imgtoascii/badges/users.svg)](https://www.codetriage.com/victorqribeiro/imgtoascii)
