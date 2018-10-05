@@ -25,7 +25,7 @@ https://github.com/victorqribeiro/imgToAscii
 
 class imgToAscii {
 	constructor(image,size,charType){
-		this.size = ( size == 0 || size > 1 ? 1 : size) || 1;
+		this.size = ( size <= 0 || size > 1 ? 1 : size) || 1;
 		this.charType = charType || 0;
 		this.alphabet = {
 			0: ["@","%","#","*","+","=","-",":","."," "],
