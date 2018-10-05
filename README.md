@@ -17,9 +17,18 @@ ele.display();
 </script>
 ```
 
+You can also resize your image passing a second parameter between 0 and 1 as percentage. e.g.: 0.5 = 50% - Will reduce the size of your image in 50% both vertical and horizontal (width, height).
+
+```
+<script>
+let eu = new imgToAscii('eu.png',0.5);
+eu.display();
+</script>
+```
+
 ## Important
 
-The ascii art depends on a monospace font to work properly. You should consider that 1 pixel in your image is going to be translated to 1 char in Ascii. e.g.: if a image is 100 pixels wide, it's going to take 100 chars of space on your page, unless you do something about it. (Which may be my next commit)
+The ascii art depends on a monospace font to work properly. You should consider that 1 pixel in your image is going to be translated to 1 char in Ascii. e.g.: if a image is 100 pixels wide, it's going to take 100 chars of space on your page, unless you do something about it.
 
 The imgToAscii should work with remote images:
 ```

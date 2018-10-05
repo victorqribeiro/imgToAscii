@@ -24,7 +24,8 @@ https://github.com/victorqribeiro/imgToAscii
 */
 
 class imgToAscii {
-	constructor(image,charType){
+	constructor(image,size,charType){
+		this.size = ( size == 0 || size > 1 ? 1 : size) || 1;
 		this.charType = charType || 0;
 		this.alphabet = {
 			0: ["@","%","#","*","+","=","-",":","."," "],
@@ -53,12 +54,12 @@ class imgToAscii {
 	async loadPixels(){
 		return new Promise( resolve => {
 			this.canvas = document.createElement('canvas');
-			this.canvas.width = this.image.width;
-			this.canvas.height = this.image.height;
+			this.canvas.width = this.image.width * this.size;
+			this.canvas.height = this.image.height * this.size;
 			this.context = this.canvas.getContext('2d');
-			this.context.drawImage(this.image, 0, 0);
-			this.imageData = this.context.getImageData(0,0,this.image.width,this.image.height);
-			this.grayPixels = new Uint8Array(this.image.width * this.image.height);
+			this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
+			this.imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
+			this.grayPixels = new Uint8Array(this.canvas.width * this.canvas.height);
 			for(let i = 0, j = 0; i < this.imageData.data.length; i+=4,j++){
 				this.grayPixels[j] = (this.imageData.data[i] * 0.2126) + 
 														 (this.imageData.data[i+1] * 0.7152) + 
@@ -85,7 +86,7 @@ class imgToAscii {
 					break;
 				}
 			}
-			if( !((i+1) % this.image.width) ){
+			if( !((i+1) % this.canvas.width) ){
 				this.string += "\n";
 			}
 		}
