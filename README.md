@@ -31,6 +31,6 @@ but it might not because of cross-origin settings. Keep that in mind.
 
 A similar code is running on my [photoEditor](https://victorribeiro.com/photoEditor) to generate a image of the ascii code (what?!)
 
-![result](ele.png)
+![result](img/ele.png)
 
-![result](eu-ascii.png)
+![result](img/eu-ascii.png)
