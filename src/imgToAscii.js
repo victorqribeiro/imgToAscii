@@ -35,6 +35,7 @@ class imgToAscii {
 					"`","'","."," "]
 		}
 		this.string = "";
+		this.stringColor = "";
 		this.canvas;
 		this.context;
 		this.imageData;
@@ -91,6 +92,35 @@ class imgToAscii {
 			}
 		}
 		pre.innerText = this.string;
+	}
+	
+	async displayColor(bg){
+		bg = bg || 'transparent';
+		let pre = document.createElement('pre');
+		pre.style.fontFamily = "Courier, monospace";
+		pre.style.lineHeight = "6px";
+		pre.style.fontSize = "11px";
+		document.body.appendChild(pre);
+		await this.loadImage();
+		await this.loadPixels();
+		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
+		for(let i = 0, c = 0; i < this.grayPixels.length; i++, c+=4){
+			for(let j = 0; j < this.alphabet[this.charType].length; j++){
+				if( this.grayPixels[i] < (j*grayStep)+grayStep ){
+					let r = this.imageData.data[c];
+					let g = this.imageData.data[c+1];
+					let b = this.imageData.data[c+2];
+					this.stringColor += "<span style=\"background-color: "+bg+"; color: rgb("+r+","+g+","+b+"); \">" 
+													 +this.alphabet[this.charType][j]
+													 +"</span>";
+					break;
+				}
+			}
+			if( !((i+1) % this.canvas.width) ){
+				this.stringColor += "<br>";
+			}
+		}
+		pre.innerHTML = this.stringColor;
 	}
 
 }

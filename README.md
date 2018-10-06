@@ -26,6 +26,15 @@ eu.display();
 </script>
 ```
 
+To display the ASCII image with color just call the method displayColor(). You can set the background color of your image passing a color parameter to the method. e.g.: gray, white, black, #fff, rgb(10,10,10). Default is transparent.
+
+```
+<script>
+let euColor = new imgToAscii('eu.png',0.5);
+euColor.displayColor('gray');
+</script>
+```
+
 ## Important
 
 The ascii art depends on a monospace font to work properly. You should consider that 1 pixel in your image is going to be translated to 1 char in Ascii. e.g.: if a image is 100 pixels wide, it's going to take 100 chars of space on your page, unless you do something about it.
@@ -43,5 +52,7 @@ A similar code is running on my [photoEditor](https://victorribeiro.com/photoEdi
 ![result](img/ele.png)
 
 ![result](img/eu-ascii.png)
+
+![result](img/eu-ascii-color.png)
 
 [![Open Source Helpers](https://www.codetriage.com/victorqribeiro/imgtoascii/badges/users.svg)](https://www.codetriage.com/victorqribeiro/imgtoascii)
