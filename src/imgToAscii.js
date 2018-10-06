@@ -77,8 +77,10 @@ class imgToAscii {
 		pre.style.fontSize = "11px";
 		pre.style.color = "#000";
 		document.body.appendChild(pre);
-		await this.loadImage();
-		await this.loadPixels();
+		if( !this.image )
+			await this.loadImage();
+		if( !this.grayPixels )
+			await this.loadPixels();
 		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
 		for(let i = 0; i < this.grayPixels.length; i++){
 			for(let j = 0; j < this.alphabet[this.charType].length; j++){
@@ -101,8 +103,10 @@ class imgToAscii {
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
 		document.body.appendChild(pre);
-		await this.loadImage();
-		await this.loadPixels();
+		if( !this.image )
+			await this.loadImage();
+		if( !this.grayPixels )
+			await this.loadPixels();
 		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
 		for(let i = 0, c = 0; i < this.grayPixels.length; i++, c+=4){
 			for(let j = 0; j < this.alphabet[this.charType].length; j++){
