@@ -48,26 +48,28 @@ class imgToAscii {
 		return new Promise( resolve =>{
 			this.image = new Image();
 			this.image.src = this.imageSrc;
-			this.image.onload = ()=> resolve()
+			this.image.onload = ()=> {
+				this.loadPixels();
+				resolve()
+			}
 		})
 	}
 	
-	async loadPixels(){
-		return new Promise( resolve => {
-			this.canvas = document.createElement('canvas');
-			this.canvas.width = this.image.width * this.size;
-			this.canvas.height = this.image.height * this.size;
-			this.context = this.canvas.getContext('2d');
-			this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
-			this.imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
-			this.grayPixels = new Uint8Array(this.canvas.width * this.canvas.height);
-			for(let i = 0, j = 0; i < this.imageData.data.length; i+=4,j++){
-				this.grayPixels[j] = (this.imageData.data[i] * 0.2126) + 
-														 (this.imageData.data[i+1] * 0.7152) + 
-														 (this.imageData.data[i+2] * 0.0722);
-			}
-			resolve();
-		})
+	loadPixels(){
+		if(this.grayPixels)
+			return;
+		this.canvas = document.createElement('canvas');
+		this.canvas.width = this.image.width * this.size;
+		this.canvas.height = this.image.height * this.size;
+		this.context = this.canvas.getContext('2d');
+		this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
+		this.imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
+		this.grayPixels = new Uint8Array(this.canvas.width * this.canvas.height);
+		for(let i = 0, j = 0; i < this.imageData.data.length; i+=4,j++){
+			this.grayPixels[j] = (this.imageData.data[i] * 0.2126) + 
+													 (this.imageData.data[i+1] * 0.7152) + 
+													 (this.imageData.data[i+2] * 0.0722);
+		}
 	}
 	
 	async display(){
@@ -77,10 +79,8 @@ class imgToAscii {
 		pre.style.fontSize = "11px";
 		pre.style.color = "#000";
 		document.body.appendChild(pre);
-		if( !this.image )
-			await this.loadImage();
 		if( !this.grayPixels )
-			await this.loadPixels();
+			await this.loadImage();
 		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
 		for(let i = 0; i < this.grayPixels.length; i++){
 			for(let j = 0; j < this.alphabet[this.charType].length; j++){
@@ -103,10 +103,8 @@ class imgToAscii {
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
 		document.body.appendChild(pre);
-		if( !this.image )
-			await this.loadImage();
 		if( !this.grayPixels )
-			await this.loadPixels();
+			await this.loadImage();
 		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
 		for(let i = 0, c = 0; i < this.grayPixels.length; i++, c+=4){
 			for(let j = 0; j < this.alphabet[this.charType].length; j++){
