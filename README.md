@@ -10,7 +10,8 @@ Include the imgToAscii.js file
 ```
 or
 ```
-<script src="https://cdn.rawgit.com/victorqribeiro/imgToAscii/be37ce94/src/imgToAscii.js"></script>
+<script src="https://cdn.rawgit.com/victorqribeiro/imgToAscii/b4661d13/src/imgToAscii.js"></script>
+
 ```
 then just create a new imgToAscii object with the image address and optionaly the alphabet: (0 - simpler shades, 1 - more complex shades) - default is 0
 
