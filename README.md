@@ -35,10 +35,11 @@ To display the ASCII image with color just call the method displayColor(). You c
 
 ```
 <script>
-let euColor = new imgToAscii('eu.png',0.5);
-euColor.displayColor('gray');
+eu.displayColor('gray');
 </script>
 ```
+
+Note that on the code above the same 'eu' image was used. Once you load an image, you can display it with or without color, without the need to reload the image data.
 
 ## Important
 
