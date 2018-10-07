@@ -36,40 +36,39 @@ class imgToAscii {
 		}
 		this.string = "";
 		this.stringColor = "";
-		this.canvas;
-		this.context;
-		this.imageData;
-		this.grayPixels;
-		this.image;
 		this.imageSrc = image;
-	}
-	
-	async loadImage(){
-		return new Promise( resolve =>{
+		this.loadImage = new Promise( resolve =>{
 			this.image = new Image();
 			this.image.src = this.imageSrc;
 			this.image.onload = ()=> {
-				this.loadPixels();
-				resolve()
+				this.canvas = document.createElement('canvas');
+				this.canvas.width = this.image.width * this.size;
+				this.canvas.height = this.image.height * this.size;
+				this.context = this.canvas.getContext('2d');
+				this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
+				this.imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
+				let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
+				for(let i = 0; i < this.imageData.data.length; i+=4){
+					for(let j = 0; j < this.alphabet[this.charType].length; j++){
+						let r = this.imageData.data[i];
+						let g = this.imageData.data[i+1];
+						let b = this.imageData.data[i+2];
+						if( (r * 0.2126) + (g * 0.7152) + (b * 0.0722) < (j+1) * grayStep ){
+							this.string += this.alphabet[this.charType][j];
+							this.stringColor += "<span style=\"color: rgb("+r+","+g+","+b+"); \">" 
+															 +this.alphabet[this.charType][j]
+															 +"</span>";
+							break;	
+						}
+					}
+					if( !((i/4+1) % this.canvas.width) ){
+						this.string += "\n";
+						this.stringColor += "<br>";
+					}
+				}
+				resolve();
 			}
-		})
-	}
-	
-	loadPixels(){
-		if(this.grayPixels)
-			return;
-		this.canvas = document.createElement('canvas');
-		this.canvas.width = this.image.width * this.size;
-		this.canvas.height = this.image.height * this.size;
-		this.context = this.canvas.getContext('2d');
-		this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
-		this.imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
-		this.grayPixels = new Uint8Array(this.canvas.width * this.canvas.height);
-		for(let i = 0, j = 0; i < this.imageData.data.length; i+=4,j++){
-			this.grayPixels[j] = (this.imageData.data[i] * 0.2126) + 
-													 (this.imageData.data[i+1] * 0.7152) + 
-													 (this.imageData.data[i+2] * 0.0722);
-		}
+		});
 	}
 	
 	async display(){
@@ -77,51 +76,21 @@ class imgToAscii {
 		pre.style.fontFamily = "Courier, monospace";
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
-		pre.style.color = "#000";
+		pre.style.display = "inline-block";
 		document.body.appendChild(pre);
-		if( !this.grayPixels )
-			await this.loadImage();
-		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
-		for(let i = 0; i < this.grayPixels.length; i++){
-			for(let j = 0; j < this.alphabet[this.charType].length; j++){
-				if( this.grayPixels[i] < (j*grayStep)+grayStep ){
-					this.string += this.alphabet[this.charType][j];
-					break;
-				}
-			}
-			if( !((i+1) % this.canvas.width) ){
-				this.string += "\n";
-			}
-		}
+		await this.loadImage;
 		pre.innerText = this.string;
 	}
-	
+
 	async displayColor(bg){
-		bg = bg || 'transparent';
 		let pre = document.createElement('pre');
 		pre.style.fontFamily = "Courier, monospace";
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
+		pre.style.display = "inline-block";
+		pre.style.backgroundColor = bg;
 		document.body.appendChild(pre);
-		if( !this.grayPixels )
-			await this.loadImage();
-		let grayStep = Math.ceil( 255 / this.alphabet[this.charType].length );
-		for(let i = 0, c = 0; i < this.grayPixels.length; i++, c+=4){
-			for(let j = 0; j < this.alphabet[this.charType].length; j++){
-				if( this.grayPixels[i] < (j*grayStep)+grayStep ){
-					let r = this.imageData.data[c];
-					let g = this.imageData.data[c+1];
-					let b = this.imageData.data[c+2];
-					this.stringColor += "<span style=\"background-color: "+bg+"; color: rgb("+r+","+g+","+b+"); \">" 
-													 +this.alphabet[this.charType][j]
-													 +"</span>";
-					break;
-				}
-			}
-			if( !((i+1) % this.canvas.width) ){
-				this.stringColor += "<br>";
-			}
-		}
+		await this.loadImage;
 		pre.innerHTML = this.stringColor;
 	}
 
