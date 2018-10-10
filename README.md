@@ -62,3 +62,5 @@ A similar code is running on my [photoEditor](https://victorribeiro.com/photoEdi
 ![result](img/eu-ascii-color.png)
 
 [![Open Source Helpers](https://www.codetriage.com/victorqribeiro/imgtoascii/badges/users.svg)](https://www.codetriage.com/victorqribeiro/imgtoascii)
+
+[![Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=victorqribeiro%40gmail%2ecom&lc=BR&item_name=Victor%20Ribeiro&item_number=donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
