@@ -37,7 +37,7 @@ class imgToAscii {
 		this.string = "";
 		this.stringColor = "";
 		this.imageSrc = image;
-		this.loadImage = new Promise( resolve =>{
+		this.loadImage = new Promise( (resolve,reject) =>{
 			this.image = new Image();
 			this.image.src = this.imageSrc;
 			this.image.onload = ()=> {
@@ -67,8 +67,9 @@ class imgToAscii {
 					}
 				}
 				resolve();
-			}
-		});
+			};
+			this.image.error = reject;
+		}).catch( e => console.error(e) );
 	}
 	
 	async display(){
