@@ -72,9 +72,10 @@ class imgToAscii {
 		}).catch( e => console.error(e) );
 	}
 	
-	async display(){
+	async display(mono){
 		let pre = document.createElement('pre');
-		pre.style.fontFamily = "Courier, monospace";
+		const fontFamName = mono ? "Courier, monospace" : "Helvetica";
+		pre.style.fontFamily = fontFamName;
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
 		pre.style.display = "inline-block";
@@ -85,7 +86,8 @@ class imgToAscii {
 
 	async displayColor(bg){
 		let pre = document.createElement('pre');
-		pre.style.fontFamily = "Courier, monospace";
+		//pre.style.fontFamily = "Courier, monospace";
+		pre.style.fontFamily = "Verdana, sans-serif";
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
 		pre.style.display = "inline-block";
