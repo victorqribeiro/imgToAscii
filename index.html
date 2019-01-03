@@ -1,21 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en-us">
 <head>
 	<meta charset="utf-8" />
-	<meta author="Victor Ribeiro" />
-	<title> imgToAscii - Example </title>
+	<meta author="Fitsum" />
+	<title> imgToAscii - Test </title>
+	<style>
+		body{
+		}
+		pre:first-of-type{
+			color: white;
+			background-image: linear-gradient(to bottom right, brown, yellow);
+		}
+		#info{
+			position: fixed;
+			top: 0;
+			left: 50%;	
+		}
+	</style>
 </head>
 <body>
+	<div id="displays"></div>
 	<script src="src/imgToAscii.js"></script>
 	<script>
-		let ele = new imgToAscii('img/elefante.png');
-		ele.display();
+		let bikes = [{"path": "img/bike240.jpg", "mono": false},{"path":"img/bike.jpg", "mono": true}];
+		let i2Aobjs = bikes;
+		let displays = {};
+
+		i2Aobjs.forEach((obj)=>{
+			displays[obj.path] = new imgToAscii(obj.path); // image-to-ascii ratio ~1:6.6
+			displays[obj.path].display(obj.mono);
+			document.querySelector("#displays").appendChild(document.createElement("p").appendChild(document.createTextNode(displays[obj.path].size)));	
+		});
 	</script>
-	<div> Some text </div>
-	<script>
-		let eu = new imgToAscii('img/eu.png',0.8);
-		eu.display();
-		eu.displayColor('gray');
-	</script>
+	<div id="info"><p>fixed</p></div>
 </body>
 </html>
