@@ -5,38 +5,32 @@ A JavaScript implementation of a image to ascii converter.
 ## How to use
 
 Include the imgToAscii.js file
-```
+```html
 <script src="src/imgToAscii.js"></script>
 ```
 or
-```
+```html
 <script src="https://raw.githubusercontent.com/victorqribeiro/imgToAscii/v1.3/src/imgToAscii.js"></script>
 
 ```
 then just create a new imgToAscii object with the image address and optionaly the alphabet: (0 - simpler shades, 1 - more complex shades) - default is 0
 
-```
-<script>
+```javascript
 let ele = new imgToAscii('elefante.png');
 ele.display();
-</script>
 ```
 
 You can also resize your image passing a second parameter between 0 and 1 as percentage. e.g.: 0.5 = 50% - Will reduce the size of your image in 50% both vertical and horizontal (width, height).
 
-```
-<script>
+```javascript
 let eu = new imgToAscii('eu.png',0.5);
 eu.display();
-</script>
 ```
 
 To display the ASCII image with color just call the method displayColor(). You can set the background color of your image passing a color parameter to the method. e.g.: gray, white, black, #fff, rgb(10,10,10). Default is transparent.
 
-```
-<script>
+```javascript
 eu.displayColor('gray');
-</script>
 ```
 
 Note that on the code above the same 'eu' image was used. Once you load an image, you can display it with or without color, without the need to reload the image data.
@@ -46,7 +40,7 @@ Note that on the code above the same 'eu' image was used. Once you load an image
 The ascii art depends on a monospace font to work properly. You should consider that 1 pixel in your image is going to be translated to 1 char in Ascii. e.g.: if a image is 100 pixels wide, it's going to take 100 chars of space on your page, unless you do something about it.
 
 The imgToAscii should work with remote images:
-```
+```javascript
 let img = new imgToAscii('http://site.com/image.png');
 ```
 but it might not because of cross-origin settings. Keep that in mind.
