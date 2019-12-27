@@ -2,6 +2,8 @@
 
 A JavaScript implementation of a image to ascii converter.
 
+[Live example](https://victorqribeiro.github.io/imgToAscii/)
+
 ## How to use
 
 Include the imgToAscii.js file
