@@ -54,9 +54,10 @@ class imgToAscii {
 						let g = this.imageData.data[i+1];
 						let b = this.imageData.data[i+2];
 						if( (r * 0.2126) + (g * 0.7152) + (b * 0.0722) < (j+1) * grayStep ){
-							this.string += this.alphabet[this.charType][j];
+						    const char = this.alphabet[this.charType][j];
+							this.string += char
 							this.stringColor += "<span style=\"color: rgb("+r+","+g+","+b+"); \">" 
-															 +this.alphabet[this.charType][j]
+															 +(char.replace(' ', '&nbsp;'))
 															 +"</span>";
 							break;	
 						}
@@ -72,27 +73,34 @@ class imgToAscii {
 		}).catch( e => console.error(e) );
 	}
 	
-	async display(){
-		let pre = document.createElement('pre');
+	getPreElement(){
+		const pre = document.createElement('pre');
 		pre.style.fontFamily = "Courier, monospace";
 		pre.style.lineHeight = "6px";
 		pre.style.fontSize = "11px";
 		pre.style.display = "inline-block";
-		document.body.appendChild(pre);
+		return pre
+	}
+	
+	async display(appendToBody = true){
+        const pre = this.getPreElement();
+        if(appendToBody)
+		    document.body.appendChild(pre);
 		await this.loadImage;
 		pre.innerText = this.string;
+		if(!appendToBody)
+		    return pre
 	}
 
-	async displayColor(bg){
-		let pre = document.createElement('pre');
-		pre.style.fontFamily = "Courier, monospace";
-		pre.style.lineHeight = "6px";
-		pre.style.fontSize = "11px";
-		pre.style.display = "inline-block";
+	async displayColor(bg, appendToBody = true){
+		const pre = this.getPreElement();
 		pre.style.backgroundColor = bg;
-		document.body.appendChild(pre);
+		if(appendToBody)
+		    document.body.appendChild(pre);
 		await this.loadImage;
 		pre.innerHTML = this.stringColor;
+		if(!appendToBody)
+		    return pre
 	}
 
 }
