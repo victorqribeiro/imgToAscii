@@ -1,0 +1,16 @@
+{
+  "name": "imgToAscii",
+  "version": "1.0.0",
+  "description": "A image to ASCII convertion script.",
+  "main": "./src/ImgToAscii.js",
+  "type": "module",
+  "keywords": [
+    "image",
+    "ascii"
+  ],
+  "author": "Victor Ribeiro",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^2.11.2"
+  }
+}

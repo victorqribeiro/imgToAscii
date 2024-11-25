@@ -6,14 +6,15 @@
 	<title> imgToAscii - Example </title>
 </head>
 <body>
-	<script src="src/imgToAscii.js"></script>
-	<script>
-		let ele = new imgToAscii('img/elefante.png');
+	<script type="module">
+	  import ImgToAscii from './src/ImgToAscii.js'
+		let ele = new ImgToAscii('img/elefante.png');
 		ele.display();
 	</script>
 	<div> Some text </div>
-	<script>
-		let eu = new imgToAscii('img/eu.png',0.8);
+	<script type="module">
+	  import ImgToAscii from './src/ImgToAscii.js'
+		let eu = new ImgToAscii('img/eu.png',0.8);
 		eu.display();
 		eu.displayColor('gray');
 	</script>
